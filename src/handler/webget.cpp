@@ -30,8 +30,8 @@ std::mutex cache_rw_lock;
 
 RWLock cache_rw_lock;
 
-//std::string user_agent_str = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36";
-static auto user_agent_str = "subconverter/" VERSION " cURL/" LIBCURL_VERSION;
+std::string user_agent_str = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36";
+// static auto user_agent_str = "subconverter/" VERSION " cURL/" LIBCURL_VERSION;
 
 struct curl_progress_data
 {
@@ -158,7 +158,7 @@ static int curlGet(const FetchArgument &argument, FetchResult &result)
     {
         if(startsWith(argument.proxy, "cors:"))
         {
-            header_list = curl_slist_append(header_list, "X-Requested-With: subconverter " VERSION);
+            // header_list = curl_slist_append(header_list, "X-Requested-With: subconverter " VERSION);
             new_url = argument.proxy.substr(5) + argument.url;
         }
         else
@@ -177,8 +177,8 @@ static int curlGet(const FetchArgument &argument, FetchResult &result)
         if(!argument.request_headers->contains("User-Agent"))
             curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, user_agent_str);
     }
-    header_list = curl_slist_append(header_list, "SubConverter-Request: 1");
-    header_list = curl_slist_append(header_list, "SubConverter-Version: " VERSION);
+    // header_list = curl_slist_append(header_list, "SubConverter-Request: 1");
+    // header_list = curl_slist_append(header_list, "SubConverter-Version: " VERSION);
     if(header_list)
         curl_easy_setopt(curl_handle, CURLOPT_HTTPHEADER, header_list);
 
